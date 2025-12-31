@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace = "~{base::layout(~{::section})}">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<section>
+  <div class="container-fluid mt-5 p-2">
+
+    <div class="card card-sh">
+      <div class="card-header text-center fs-4">
+        <p class="fs-4">View Users</p>
+        <th:block th:if="${session.succMsg}">
+          <p class="text-success fw-bold">[[${session.succMsg}]]</p>
+          <th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+        </th:block>
+        <th:block th:if="${session.errorMsg}">
+          <p class="text-danger fw-bold">[[${session.errorMsg}]]</p>
+          <th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+        </th:block></div>
+      <div class="card-body">
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">Sr.no</th>
+            <th scope="col">Profile Photo</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Contact details</th>
+            <th scope="col">address</th>
+
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+
+
+
+
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="p,c:${users}">
+            <th scope="row">[[${c.count}]]</th>
+            <td><img th:src="@{'/img/profile_img/'+${p.profileImage}}" width="70px" height="70px"></td>
+            <td>[[${p.name}]]</td>
+            <td>[[${p.email}]]</td>
+            <td>[[${p.mobileNumber}]]</td>
+            <td>[[${p.address+','+p.city + ',' + p.state +','+p.pincode}]]</td>
+            <td>[[${p.isEnable}]]</td>
+
+
+
+            <td>
+              <a th:href="@{'/admin/updateStatus?status=true&id='+${p.id}}" class="btn  btn-sm btn-primary">Active</a>
+              <a th:href="@{'/admin/updateStatus?status=false&id='+${p.id}}" class="btn  btn-sm btn-danger">Inactive</a></td>
+          </tr>
+
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</body>
+</html>
